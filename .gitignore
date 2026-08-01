@@ -1,2 +1,7 @@
+aws/
+awscliv2.zip
+*.zip
+*.tar.gz
+.terraform/
 *.tfstate
 *.tfstate.backup

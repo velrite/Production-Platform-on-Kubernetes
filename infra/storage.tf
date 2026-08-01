@@ -28,8 +28,8 @@ resource "aws_eks_pod_identity_association" "ebs_csi" {
 }
 
 resource "aws_eks_addon" "ebs_csi" {
-  cluster_name  = aws_eks_cluster.main.name
-  addon_name    = "aws-ebs-csi-driver"
+  cluster_name = aws_eks_cluster.main.name
+  addon_name   = "aws-ebs-csi-driver"
 
   depends_on = [aws_eks_pod_identity_association.ebs_csi]
 }

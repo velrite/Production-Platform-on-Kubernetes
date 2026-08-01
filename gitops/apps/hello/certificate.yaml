@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hello-tls
+  namespace: default
+spec:
+  secretName: hello-tls-secret
+  dnsNames:
+    - hello.platform.internal
+  issuerRef:
+    name: platform-ca-issuer
+    kind: ClusterIssuer
