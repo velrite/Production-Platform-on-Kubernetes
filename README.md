@@ -16,24 +16,7 @@ Getting an application onto Kubernetes once is easy. The hard part is repeatabil
 
 ---
 
-## Architecture
-
-~~~
-engineer
-  | terraform apply                       | git push
-  v                                       v
-Terraform --> AWS (VPC, EKS, IAM,       GitHub: gitops/
-              Route53, EBS CSI)              |  watched
-                                             v
-VPC, 3 AZs, one NAT gateway per AZ        ArgoCD (automated, prune, selfHeal)
-  private subnets: EKS v1.35                 |
-    system node group  2 x t3.small          v
-    Karpenter nodes    Bottlerocket       hello app: default, dev, staging, prod
-    NGINX Ingress <-- cert-manager (private CA)
-    ExternalDNS --> Route53 private zone
-    HPA + metrics-server, EBS CSI
-  public subnets: NLB, NAT gateways
-~~~
+![AWS DevOps Multi-AZ Architecture Flow](docs/evidence/AWS%20DevOps%20Multi-AZ%20Architecture%20Flow.png)
 
 | Layer | What is used |
 |---|---|
