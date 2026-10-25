@@ -1,7 +1,8 @@
+*.tar.gz
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.zip
+.terraform/
 aws/
 awscliv2.zip
-*.zip
-*.tar.gz
-.terraform/
-*.tfstate
-*.tfstate.backup
