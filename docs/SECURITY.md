@@ -46,7 +46,7 @@ ingress:
       - namespaceSelector: {matchLabels: {kubernetes.io/metadata.name: ingress-nginx}}
     ports: [{protocol: TCP, port: 80}]
 ```
-**Proven live:** direct requests to the pod bypassing the Ingress path are blocked; only traffic through the sanctioned Ingress→Service→Pod path succeeds.
+**Status: NOT VERIFIED.** The policy objects exist, but enforcement was never confirmed. During the HPA test, pods in the same namespace reached the app despite the default-deny rule, which suggests the CNI was not enforcing policy. A block test from a non-allowed namespace is required before this control can be claimed.
 
 ## Pod Security Standards
 

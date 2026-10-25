@@ -65,7 +65,7 @@ flowchart TB
 5. Traffic is proxied to the matching Kubernetes `Service`, then load-balanced across healthy backend Pods via `kube-proxy`/`iptables`.
 6. Response returns the same path in reverse.
 
-**NetworkPolicy enforcement point:** between step 5 and the Pod — only traffic originating from the `ingress-nginx` namespace, on port 80, is permitted into the `hello` app's pods. All other ingress traffic to those pods is denied by default (`default-deny-ingress`).
+**NetworkPolicy intent (enforcement NOT VERIFIED):** between step 5 and the Pod — only traffic originating from the `ingress-nginx` namespace, on port 80, is permitted into the `hello` app's pods. All other ingress traffic to those pods is denied by default (`default-deny-ingress`).
 
 ## Failure Points — Explicit Enumeration
 

@@ -1,6 +1,6 @@
 # Production Platform on Kubernetes
 
-**A three-AZ EKS platform provisioned with Terraform, delivered through GitOps, and broken on purpose to see how it fails.**
+**A three-AZ EKS platform provisioned with Terraform, delivered through GitOps, and tested for failure (node termination, autoscaling, rolling update).**
 
 > **Evidence status.** The AWS environment was built, tested and destroyed between 2026-07-26 and 2026-08-09. The account's Free Plan credits then ran out and the account was closed, so nothing can be run live. This README rests on repository evidence (see [Evidence](#evidence)). Where something was not proven, it says so.
 
@@ -77,7 +77,7 @@ Transcribed from terminal output at test time (`docs/TESTING_AND_VALIDATION.md`)
 
 ## 5. Failure catalogue
 
-Twelve incidents are written up in [`docs/INCIDENTS.md`](docs/INCIDENTS.md). The ones that taught the most:
+Nine incidents are written up in [`docs/INCIDENTS.md`](docs/INCIDENTS.md). The ones that taught the most:
 
 | Symptom | Real cause | Where it was found |
 |---|---|---|
@@ -92,7 +92,7 @@ Credential exposures (an AWS key and a GitHub token pasted into chat) are docume
 
 ## 6. Decisions worth defending
 
-Ten ADRs in [`docs/ADR.md`](docs/ADR.md). Two choices are deliberate over-engineering for a project this size:
+Eight ADRs in [`docs/ADR.md`](docs/ADR.md). Two choices are deliberate over-engineering for a project this size:
 
 - **Three NAT gateways** cost about $70/month more than one, and remove a cross-AZ single point of failure. For a small hobby workload, one is the right call.
 - **Karpenter** brought three incidents. For a small steady workload, a static node group is the right call.

@@ -67,7 +67,7 @@ Real incidents from this build, in chronological order. Format: What Happened �
 
 **Root cause:** Multi-line `kubectl create secret` command with backslash line continuations broke apart during paste (terminal interpreted each continuation line as a separate command), exposing partial credential material mid-command.
 
-**Fix:** Token revoked immediately on GitHub. Given the repository contained no actual secrets (verified — no credentials in any `.tf` or manifest file all session), the pragmatic decision was made to make the repository public rather than fight PAT-based authentication further under time pressure. ArgoCD sync resolved immediately with zero further authentication configuration.
+**Fix:** Revocation of the exposed token was instructed; completion was not recorded (to be verified). Given the repository contained no actual secrets (verified — no credentials in any `.tf` or manifest file all session), the pragmatic decision was made to make the repository public rather than fight PAT-based authentication further under time pressure. ArgoCD sync resolved immediately with zero further authentication configuration.
 
 **Prevention:** Documented as a real, deliberate trade-off (see ADR-006 context) rather than a shortcut — repository content was audited for sensitivity before making this call, not after.
 
