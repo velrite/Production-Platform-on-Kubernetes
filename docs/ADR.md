@@ -114,3 +114,15 @@ Format: Context → Decision → Alternatives Rejected → Trade-offs → What W
 
 **What would revisit this:** the moment a second person or automated CI system needs access to this account — at that point, AWS IAM Access Analyzer should generate a real least-privilege policy from actual CloudTrail usage history, not a guess.
 
+
+---
+
+## ADR-009: Public repository
+
+**Context:** ArgoCD could not read a private repository, and a credential had just been exposed. **Decision:** make the repository public after auditing it for secrets. **Alternatives:** deploy key, GitHub App, fine-grained token. **Trade-offs:** loses privacy, gains simplicity. **Revisit:** use a read-only deploy key or GitHub App, never a personal token.
+
+---
+
+## ADR-010: Public EKS API endpoint
+
+**Context:** the operator's IP was not stable. **Decision:** endpoint public with `0.0.0.0/0`, protected by IAM and RBAC. **Trade-offs:** larger exposed surface. **Revisit:** restrict CIDRs, or use private access plus a VPN or bastion.

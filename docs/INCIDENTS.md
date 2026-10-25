@@ -67,7 +67,7 @@ Real incidents from this build, in chronological order. Format: What Happened �
 
 **Root cause:** Multi-line `kubectl create secret` command with backslash line continuations broke apart during paste (terminal interpreted each continuation line as a separate command), exposing partial credential material mid-command.
 
-**Fix:** Revocation of the exposed token was instructed; completion was not recorded (to be verified). Given the repository contained no actual secrets (verified — no credentials in any `.tf` or manifest file all session), the pragmatic decision was made to make the repository public rather than fight PAT-based authentication further under time pressure. ArgoCD sync resolved immediately with zero further authentication configuration.
+**Fix:** Token revoked on GitHub (owner confirmed 2026-10-25; the revocation was not recorded at the time). Given the repository contained no actual secrets (verified — no credentials in any `.tf` or manifest file all session), the pragmatic decision was made to make the repository public rather than fight PAT-based authentication further under time pressure. ArgoCD sync resolved immediately with zero further authentication configuration.
 
 **Prevention:** Documented as a real, deliberate trade-off (see ADR-006 context) rather than a shortcut — repository content was audited for sensitivity before making this call, not after.
 
@@ -131,3 +131,30 @@ Both left real AWS resources (load balancer, ENIs, DNS records) that blocked del
 
 **Prevention:** Both workarounds documented in `full-rebuild.sh` with inline comments explaining *why*, so a future rebuild on the same environment doesn't require re-diagnosing from scratch.
 
+
+---
+
+## Incident 10 — AWS account closed
+
+**Severity:** High (live environment and AWS-side evidence unavailable)
+**What happened:** AWS closed the account after the Free Plan credits were used. The console shows only the closure notice. Reactivation is possible until 2026-12-03.
+**Root cause:** Credits were consumed faster than tracked. Cost Explorer showed about $0 because credits absorbed the charges, so a spend-threshold alert could never fire.
+**Prevention:** Monitor credit balance as its own signal, tear down promptly, and capture evidence while the environment exists.
+
+---
+
+## Incident 11 — Invalid load test
+
+**Severity:** Low (data discarded)
+**What happened:** A curl-based load test at 10, 50 and 100 concurrency reported 100% errors and 0.0 ms latency at every level.
+**Root cause (likely, not proven):** the load-balancer hostname was hardcoded and stale after a rebuild, so every request failed immediately. An earlier explanation (DNS overload) was a guess and is withdrawn.
+**Prevention:** resolve hostnames at run time, and check the measurement is valid before interpreting the result.
+
+---
+
+## Incident 12 — Unsupported security claim
+
+**Severity:** Medium (documentation integrity)
+**What happened:** Earlier documentation said NetworkPolicy blocking had been proven live. It had not. During the HPA test, pods in the same namespace reached the app despite a default-deny ingress rule, which suggests the CNI was not enforcing policy.
+**Fix:** The claim was withdrawn and the control is marked NOT VERIFIED.
+**Prevention:** every security claim needs a block test before it is stated.

@@ -1,8 +1,8 @@
 # Testing and Validation
 
-Every claim below is either already proven with real command output (captured this build), or marked explicitly as pending live capture for the demonstration recording.
+Results below are terminal output transcribed at test time and committed on 2026-08-09. They are not screenshots, and the live cluster no longer exists.
 
-## Already Proven Live
+## Observed During the Build (transcribed terminal output)
 
 ### GitOps loop
 Committed `apps/hello/deployment.yaml` to git → ArgoCD synced automatically → pods running, with zero manual `kubectl apply`.
@@ -47,7 +47,7 @@ Scaling the test deployment back to 1 replica triggers `consolidationPolicy: Whe
 
 `[SCREENSHOT: kubectl get nodes -w during consolidation — node count dropping]`
 
-## Pending Live Capture (for demonstration recording)
+## Behavioural Test Results (transcribed terminal output)
 
 ### Zero-downtime deployment — ✅ CONFIRMED, LIVE RESULT
 

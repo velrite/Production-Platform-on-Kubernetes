@@ -64,3 +64,6 @@ This project was never left running continuously — deliberate destroy/rebuild 
 - **Spot capacity for Karpenter nodes** — NodePool currently specifies `capacity-type: on-demand` implicitly (not set to `spot`). Spot would meaningfully reduce node cost for fault-tolerant, non-critical workloads like `dev`/`staging`, at the cost of possible interruption — a reasonable next optimization, deliberately not applied yet to avoid adding interruption-handling complexity during initial build-out.
 - **Reverting to 1 shared NAT Gateway** — explicitly rejected for now, see ADR-001. Real trade-off, not a missed optimization.
 
+
+
+> **Correction (2026-10-25).** The $4.90 to $6.50 total above is a runtime estimate, not a measured bill. The account was later closed because all Free Plan credits were used, so real consumption was higher than tracked. See Incident 10.

@@ -122,13 +122,6 @@ resource "aws_eks_addon" "pod_identity_agent" {
   addon_name   = "eks-pod-identity-agent"
 }
 
-resource "aws_ec2_tag" "karpenter_subnet_discovery" {
-  for_each    = aws_subnet.private
-  resource_id = each.value.id
-  key         = "karpenter.sh/discovery"
-  value       = local.cluster_name
-}
-
 resource "aws_ec2_tag" "karpenter_sg_discovery" {
   resource_id = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
   key         = "karpenter.sh/discovery"
@@ -152,32 +145,32 @@ resource "aws_iam_role" "karpenter_controller" {
 
 resource "aws_iam_role_policy_attachment" "karpenter_eks_integration" {
   role       = aws_iam_role.karpenter_controller.name
-  policy_arn = "arn:aws:iam::681117450689:policy/KarpenterControllerEKSIntegrationPolicy-platform-dev-eks"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/KarpenterControllerEKSIntegrationPolicy-platform-dev-eks"
 }
 
 resource "aws_iam_role_policy_attachment" "karpenter_iam_integration" {
   role       = aws_iam_role.karpenter_controller.name
-  policy_arn = "arn:aws:iam::681117450689:policy/KarpenterControllerIAMIntegrationPolicy-platform-dev-eks"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/KarpenterControllerIAMIntegrationPolicy-platform-dev-eks"
 }
 
 resource "aws_iam_role_policy_attachment" "karpenter_interruption" {
   role       = aws_iam_role.karpenter_controller.name
-  policy_arn = "arn:aws:iam::681117450689:policy/KarpenterControllerInterruptionPolicy-platform-dev-eks"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/KarpenterControllerInterruptionPolicy-platform-dev-eks"
 }
 
 resource "aws_iam_role_policy_attachment" "karpenter_node_lifecycle" {
   role       = aws_iam_role.karpenter_controller.name
-  policy_arn = "arn:aws:iam::681117450689:policy/KarpenterControllerNodeLifecyclePolicy-platform-dev-eks"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/KarpenterControllerNodeLifecyclePolicy-platform-dev-eks"
 }
 
 resource "aws_iam_role_policy_attachment" "karpenter_resource_discovery" {
   role       = aws_iam_role.karpenter_controller.name
-  policy_arn = "arn:aws:iam::681117450689:policy/KarpenterControllerResourceDiscoveryPolicy-platform-dev-eks"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/KarpenterControllerResourceDiscoveryPolicy-platform-dev-eks"
 }
 
 resource "aws_iam_role_policy_attachment" "karpenter_zonal_shift" {
   role       = aws_iam_role.karpenter_controller.name
-  policy_arn = "arn:aws:iam::681117450689:policy/KarpenterControllerZonalShiftPolicy-platform-dev-eks"
+  policy_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/KarpenterControllerZonalShiftPolicy-platform-dev-eks"
 }
 
 resource "aws_eks_pod_identity_association" "karpenter" {
@@ -191,6 +184,6 @@ resource "aws_eks_pod_identity_association" "karpenter" {
 
 resource "aws_eks_access_entry" "karpenter_node" {
   cluster_name  = aws_eks_cluster.main.name
-  principal_arn = "arn:aws:iam::681117450689:role/KarpenterNodeRole-platform-dev-eks"
+  principal_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/KarpenterNodeRole-platform-dev-eks"
   type          = "EC2_LINUX"
 }

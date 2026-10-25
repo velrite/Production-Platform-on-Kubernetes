@@ -65,7 +65,7 @@ Two-tier private Certificate Authority via cert-manager:
 ## Secrets Handling
 
 - No credentials committed to any repository at any point (audited across all `.tf` and manifest files).
-- Two real near-misses during this build (AWS key, GitHub PAT) — both caught, both rotated immediately, both documented in `INCIDENTS.md` rather than hidden.
+- Two real near-misses during this build (AWS key, GitHub PAT) — both caught, both revoked, both documented in `INCIDENTS.md` rather than hidden.
 - Kubernetes `Secret` objects used for cert-manager's CA private key and ArgoCD's admin credential, scoped to their respective namespaces via standard Kubernetes RBAC (no cross-namespace secret access granted anywhere in this build).
 
 ## Known Gaps (Explicit, Not Hidden)
